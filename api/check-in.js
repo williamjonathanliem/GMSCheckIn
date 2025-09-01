@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         return;
       }
   
-      const GAS_URL = process.env.GAS_URL || "https://script.google.com/macros/s/AKfycbx1hzJBPNRsFkZnxxQTbhykXDT8T562XP5KkNzt4v-j/dev";     // your Apps Script /exec
+      const GAS_URL = process.env.GAS_URL || "https://script.google.com/macros/s/AKfycbz-S_b4KB3yqmx8F12HhxpoEn7eKFw2efCTKnIH4XjeQb7t1sJPd0trmuCRA2T6OPo_hQ/exec";     // your Apps Script /exec
       const SECRET  = process.env.GMSKL20300;     // must match Apps Script
   
       const r = await fetch(GAS_URL, {
