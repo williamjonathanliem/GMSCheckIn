@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/checkIN.js": {
-      "runtime": "nodejs"
-    }
-  }
-}
