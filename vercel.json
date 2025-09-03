@@ -1,0 +1,8 @@
+{
+    "functions": {
+      "api/check-in.js": {
+        "maxDuration": 30
+      }
+    }
+  }
+  
