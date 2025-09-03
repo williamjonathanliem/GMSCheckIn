@@ -1,8 +1,7 @@
 {
-    "functions": {
-      "api/check-in.js": {
-        "maxDuration": 30
-      }
+  "functions": {
+    "api/checkIN.js": {
+      "runtime": "nodejs"
     }
   }
-  
+}
