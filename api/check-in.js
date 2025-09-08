@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       return;
     }
 
-    const GAS_URL = (process.env.GAS_WEBAPP_URL || 'https://script.google.com/macros/s/AKfycbzZ5u7otD3fz-AYvQUXgXsCegWF3ACPGsXeKeGj6v-MjarJJqNf1iHSGqLAJJuICiWf/exec').trim();
+    const GAS_URL = (process.env.GAS_WEBAPP_URL || 'https://script.google.com/macros/s/AKfycbwpt59XKVqXYcZQj-YrclIws-524fCLcT7SdIhm9vS7XMNhxQ0gM5DCBK4iK-ESzywr/exec').trim();
     const SECRET  = (process.env.CHECKIN_SECRET || 'GMSKL20300').trim();
     if (!GAS_URL) { res.status(500).json({ ok:false, message:'GAS_WEBAPP_URL not set' }); return; }
     if (!SECRET)  { res.status(500).json({ ok:false, message:'CHECKIN_SECRET not set' }); return; }
