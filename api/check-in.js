@@ -5,13 +5,19 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  if (req.method === 'OPTIONS') { res.status(204).end(); return; }
-  if (req.method !== 'POST') { res.status(405).json({ ok:false, message:'Method not allowed' }); return; }
+  if (req.method === 'OPTIONS') { 
+    res.status(204).end(); 
+    return; 
+  }
+  if (req.method !== 'POST') { 
+    res.status(405).json({ ok:false, message:'Method not allowed' }); 
+    return; 
+  }
 
   try {
-    const { scannedText, target } = req.body || {};
-    if (!scannedText || !target) {
-      res.status(400).json({ ok:false, message:'Missing scannedText or target' });
+    const { scannedText, target, action } = req.body || {};
+    if (!scannedText) {
+      res.status(400).json({ ok:false, message:'Missing scannedText' });
       return;
     }
 
@@ -22,16 +28,16 @@ export default async function handler(req, res) {
 
     // Give GAS room to cold-start / Wait on LockService
     const ac = new AbortController();
-    const timeoutMs = 30000; // 30s (you can raise to 45000 if needed)
+    const timeoutMs = 30000; // 30s (raise to 45000 if needed)
     const kill = setTimeout(() => ac.abort(), timeoutMs);
 
     const t0 = Date.now();
-    console.log('check-in → GAS start', { target });
+    console.log('check-in → GAS start', { target, action });
 
     const r = await fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type':'application/json' },
-      body: JSON.stringify({ scannedText, target, secret: SECRET }),
+      body: JSON.stringify({ scannedText, target, action, secret: SECRET }),
       signal: ac.signal,
       cache: 'no-store'
     }).catch(err => {
