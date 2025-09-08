@@ -234,8 +234,12 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
   <footer class="footer">
-    <p>Copyright by GMS KL, made by William Jonathan</p>
+    <p>Copyright © <span id="year"></span> by GMS KL, made by William Jonathan</p>
   </footer>
+  
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 
   <script>
     const API_ENDPOINT = '/api/check-in';
