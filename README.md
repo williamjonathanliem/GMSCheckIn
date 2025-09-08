@@ -129,3 +129,4 @@ Browser UI (QR scan / upload)
 
 This implementation, configuration, and content are internal to the organization.  
 This document is an **overview for portfolio purposes** and intentionally excludes sensitive details.
+# GMSAsiaCheckIn
