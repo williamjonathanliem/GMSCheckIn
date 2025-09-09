@@ -14,14 +14,13 @@
 
   <style>
     :root{
-      --bg: #0a0e1a; --panel: #0f1424; --card: #1a1f2e; --muted: #94a3b8; --text: #f1f5f9;
-      --brand: #6366f1; --brand-light: #818cf8; --brand-dark: #4f46e5;
-      --ok: #10b981; --err: #ef4444; --warn: #f59e0b;
-      --ring: rgba(99,102,241,.4); --hair: rgba(255,255,255,.08);
-      --radius: 20px; --shadow: 0 20px 40px rgba(0,0,0,.4), 0 8px 16px rgba(0,0,0,.2);
-      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --bg:#0a0e1a; --panel:#0f1424; --card:#1a1f2e; --muted:#94a3b8; --text:#f1f5f9;
+      --brand:#6366f1; --ok:#10b981; --err:#ef4444; --warn:#f59e0b;
+      --ring:rgba(99,102,241,.35); --hair:rgba(255,255,255,.08);
+      --radius:20px; --shadow:0 20px 40px rgba(0,0,0,.4), 0 8px 16px rgba(0,0,0,.2);
+      --grad-btn:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+      --grad-warn:linear-gradient(135deg,#f59e0b 0%,#d97706 100%);
+      --chip-bg:linear-gradient(135deg,#1e293b 0%,#334155 100%);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -31,129 +30,106 @@
         radial-gradient(1000px 600px at 85% 15%, rgba(129,140,248,.2), transparent 65%),
         radial-gradient(800px 400px at 50% 100%, rgba(139,92,246,.15), transparent 70%),
         linear-gradient(180deg, #0a0e1a 0%, #0f1424 30%, #1a1f2e 100%);
-      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      min-height: 100dvh;
-      padding-bottom: calc(env(safe-area-inset-bottom,0px) + 16px);
-      overflow-x: hidden;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+      min-height:100dvh; padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px); overflow-x:hidden
     }
 
     .shell{max-width:1200px; margin:0 auto; padding:20px; display:flex; flex-direction:column; gap:20px}
     .header{
       display:flex; align-items:center; justify-content:space-between;
-      background: linear-gradient(135deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,.03) 100%);
-      border:1px solid var(--hair); border-radius:24px; padding:20px 24px;
-      box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,.05) inset;
-      backdrop-filter: blur(12px);
-      transition: all 0.3s ease;
+      background:linear-gradient(135deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,.03) 100%);
+      border:1px solid var(--hair); border-radius:24px; padding:20px 24px; box-shadow:var(--shadow), 0 0 0 1px rgba(255,255,255,.05) inset;
+      backdrop-filter: blur(12px)
     }
-    .header:hover { transform: translateY(-2px); box-shadow: 0 25px 50px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.08) inset; }
-    .brand{ display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.3px; font-size: clamp(20px, 4vw, 24px);
-      background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .logo{ width: 40px; height: 40px; border-radius: 8px; object-fit: contain; box-shadow: 0 4px 12px rgba(0,0,0,.2); transition: all 0.3s ease; }
-    .logo:hover { transform: scale(1.05); box-shadow: 0 6px 16px rgba(0,0,0,.3); }
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.3px; font-size:clamp(20px, 4vw, 24px);
+      background:var(--grad-btn); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text}
+    .logo{width:40px; height:40px; border-radius:8px; object-fit:contain; box-shadow:0 4px 12px rgba(0,0,0,.2)}
 
-    .grid{ display:grid; gap:20px; grid-template-columns: 1fr; }
-    @media(min-width:1024px){ .grid{ grid-template-columns: 1fr 1fr } }
+    .grid{display:grid; gap:20px; grid-template-columns:1fr} @media(min-width:1024px){ .grid{ grid-template-columns: 1fr 1fr } }
+    .card{background:linear-gradient(135deg, var(--card) 0%, rgba(26,31,46,.85) 100%); border:1px solid var(--hair);
+      border-radius:20px; box-shadow:var(--shadow), 0 0 0 1px rgba(255,255,255,.03) inset; padding:24px; backdrop-filter:blur(8px)}
+    .card h3{margin:0 0 16px; font-size:18px; color:#e2e8f0; letter-spacing:.3px; font-weight:700}
 
-    .card{ background: linear-gradient(135deg, var(--card) 0%, rgba(26,31,46,.8) 100%);
-      border:1px solid var(--hair); border-radius: var(--radius); box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,.03) inset;
-      padding:24px; backdrop-filter: blur(8px); transition: all 0.3s ease; position: relative; overflow: hidden; }
-    .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.1), transparent); }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 25px 50px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.05) inset; }
-    .card h3{ margin:0 0 16px; font-size:18px; color:#e2e8f0; letter-spacing:.3px; font-weight: 700;
-      background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    #reader{width:100%; aspect-ratio:1/1; border-radius:18px; overflow:hidden; background:linear-gradient(135deg, #0a0f1d 0%, #0f1424 100%);
+      border:1px solid rgba(255,255,255,.1); box-shadow:0 8px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.05) inset}
 
-    /* scanner */
-    #reader{ width:100%; aspect-ratio:1 / 1; border-radius:18px; overflow:hidden; background: linear-gradient(135deg, #0a0f1d 0%, #0f1424 100%);
-      border:1px solid rgba(255,255,255,.1); box-shadow: 0 8px 32px rgba(0,0,0,.3), 0 0 0 1px rgba(255,255,255,.05) inset; transition: all 0.3s ease; }
-    #reader:hover { border-color: rgba(99,102,241,.3); box-shadow: 0 12px 40px rgba(0,0,0,.4), 0 0 0 1px rgba(99,102,241,.1) inset; }
+    .controls{display:grid; gap:12px; grid-template-columns:1fr 1fr 1fr; margin-top:16px}
+    .controls.main-buttons{ grid-template-columns:1fr 1fr } @media(max-width:560px){ .controls,.controls.main-buttons{ grid-template-columns:1fr } }
 
-    .controls{ display:grid; gap:12px; grid-template-columns: 1fr 1fr 1fr; margin-top:16px; }
-    .controls.single{ grid-template-columns: 1fr }
-    .controls.main-buttons{ grid-template-columns: 1fr 1fr }
-    @media(max-width:560px){ .controls{ grid-template-columns: 1fr } .controls.main-buttons{ grid-template-columns: 1fr } }
+    .btn,.filebtn{appearance:none; border:none; border-radius:16px; padding:14px 16px; font-weight:700; cursor:pointer; width:100%; font-size:15px}
+    .btn.primary{background:var(--grad-btn); color:#fff}
+    .btn.ghost{background:var(--chip-bg); color:#e2e8f0; border:1px solid rgba(255,255,255,.1)}
+    .btn.warn{background:var(--grad-warn); color:#fff}
+    .btn:disabled{opacity:.5; cursor:not-allowed}
+    .filebtn{background:var(--chip-bg); color:#e2e8f0; border:1px solid rgba(255,255,255,.1); position:relative}
+    .filebtn input{position:absolute; inset:0; opacity:0; cursor:pointer}
 
-    .btn, .filebtn{ appearance:none; border:none; border-radius:16px; padding:16px 20px; font-weight:700; cursor:pointer; line-height:1.2; width:100%;
-      font-size: 15px; letter-spacing: 0.3px; transition: all 0.3s ease; position: relative; overflow: hidden; }
-    .btn::before, .filebtn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent); transition: left 0.5s ease; }
-    .btn:hover::before, .filebtn:hover::before { left: 100%; }
-    .btn.primary{ background: var(--gradient-primary); color:#fff; box-shadow: 0 4px 16px rgba(99,102,241,.3); }
-    .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(99,102,241,.4); }
-    .btn.ghost{ background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color:#e2e8f0; border: 1px solid rgba(255,255,255,.1); }
-    .btn.ghost:hover { background: linear-gradient(135deg, #334155 0%, #475569 100%); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
-    .btn.warn{ background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color:#fff; box-shadow: 0 4px 16px rgba(245,158,11,.3); }
-    .btn.warn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,158,11,.4); }
-    .btn:disabled{ opacity:.5; cursor:not-allowed; transform: none !important; box-shadow: none !important; }
-    .filebtn{ background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color:#e2e8f0; text-align:center; border: 1px solid rgba(255,255,255,.1); }
-    .filebtn:hover { background: linear-gradient(135deg, #334155 0%, #475569 100%); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.3); }
-    .filebtn input{ position:absolute; inset:0; opacity:0; cursor:pointer }
+    /* compact pill row */
+    .toolbar{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:12px}
+    .pill{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:999px;
+      background:var(--chip-bg); color:#e2e8f0; border:1px solid rgba(255,255,255,.1); font-weight:700; font-size:14px}
 
-    .hint{ color:var(--muted); font-size:13px; text-align:center; margin-top:12px; line-height: 1.4; }
+    .kv{display:grid; gap:12px; margin-top:16px}
+    .kv-row{display:flex; gap:12px; align-items:flex-start; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.05)}
+    .kv-row:last-child{border-bottom:none}
+    .kv-key{min-width:100px; color:#94a3b8; font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.5px}
+    .kv-val{flex:1; word-break:break-word; color:#f1f5f9; font-weight:500; line-height:1.4}
 
-    /* right column */
-    .pill{ display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:999px;
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color:#e2e8f0; font-size:13px; font-weight: 600;
-      border:1px solid rgba(255,255,255,.1); box-shadow: 0 2px 8px rgba(0,0,0,.2); transition: all 0.3s ease; }
-    .pill:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,.3); }
+    .chips{display:flex; gap:12px; flex-wrap:wrap; margin:8px 0 12px}
+    .chip{display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:999px; background:var(--chip-bg);
+      color:#e2e8f0; border:1px solid rgba(255,255,255,.1); cursor:pointer; font-weight:700; font-size:14px}
+    .chip input{accent-color:var(--brand)}
 
-    .kv{ display:grid; gap:12px; margin-top:16px }
-    .kv-row{ display:flex; gap:12px; align-items:flex-start; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,.05); }
-    .kv-row:last-child { border-bottom: none; }
-    .kv-key{ min-width:100px; color:#94a3b8; font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .kv-val{ flex:1; word-break:break-word; color:#f1f5f9; font-weight: 500; line-height: 1.4; }
+    /* action row and full-width clear */
+    .action-row{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px}
+    @media(max-width:560px){ .action-row{ grid-template-columns:1fr } }
+    .clear-row{margin-top:12px}
 
-    details.kv-more{ margin-top:12px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      border:1px solid rgba(255,255,255,.08); border-radius:12px; padding:12px 16px; transition: all 0.3s ease; }
-    details.kv-more:hover { border-color: rgba(99,102,241,.2); box-shadow: 0 4px 16px rgba(0,0,0,.2); }
-    details.kv-more summary{ cursor:pointer; color:#e2e8f0; font-weight:700; padding: 4px 0; transition: color 0.3s ease; }
-    details.kv-more summary:hover { color: #f1f5f9; }
+    .raw{display:none; margin-top:8px; color:#cbd5e1; font-size:13px; word-break:break-word; background:rgba(15,23,42,.5);
+      padding:12px; border-radius:8px; border:1px solid rgba(255,255,255,.05); font-family:Monaco, Menlo, Ubuntu Mono, monospace}
 
-    .chips{ display:flex; gap:12px; flex-wrap:wrap; margin-top:16px }
-    .chip{ display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:999px;
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color:#e2e8f0; border:1px solid rgba(255,255,255,.1);
-      cursor:pointer; font-weight: 600; font-size: 14px; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,.2); }
-    .chip:hover { background: linear-gradient(135deg, #334155 0%, #475569 100%); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.3); border-color: rgba(99,102,241,.3); }
-    .chip input{ accent-color: var(--brand) }
+    .status{min-height:28px; margin-top:12px; font-weight:700; font-size:14px; padding:8px 12px; border-radius:8px}
+    .ok{color:var(--ok); background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.2)}
+    .err{color:var(--err); background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.2)}
+    .warntext{color:var(--warn); background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.2)}
 
-    .status{ min-height:28px; margin-top:12px; font-weight:700; font-size: 14px; padding: 8px 12px; border-radius: 8px; transition: all 0.3s ease; }
-    .ok{ color: var(--ok); background: rgba(16,185,129,.1); border: 1px solid rgba(16,185,129,.2); }
-    .err{ color: var(--err); background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2); }
-    .warntext{ color: var(--warn); background: rgba(245,158,11,.1); border: 1px solid rgba(245,158,11,.2); }
+    .toast{pointer-events:none; position:fixed; left:50%; bottom:24px; transform:translateX(-50%); max-width:92vw;
+      background:var(--chip-bg); color:#f1f5f9; border:1px solid rgba(255,255,255,.1); border-radius:16px; padding:12px 16px;
+      box-shadow:var(--shadow); opacity:0; transition: all .35s ease}
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(-8px)}
 
-    .raw-toggle{ margin-top:12px }
-    .raw{ display:none; margin-top:8px; color:#cbd5e1; font-size:13px; word-break:break-word;
-      background: rgba(15,23,42,.5); padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,.05);
-      font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace; }
+    .footer{text-align:center; padding:20px; margin-top:20px; color:var(--muted); font-size:13px; font-weight:500; border-top:1px solid rgba(255,255,255,.05)}
+    .footer p{margin:0; opacity:.8}
 
-    .actionbar{ position:sticky; bottom:0; z-index:10; margin-top:16px; padding:16px;
-      background: linear-gradient(180deg, rgba(15,23,42,0) 0%, rgba(15,23,42,.95) 100%);
-      border-radius: 16px; border: 1px solid rgba(255,255,255,.08);
-      backdrop-filter: blur(12px); box-shadow: 0 -4px 24px rgba(0,0,0,.3); }
-    .action-btns{ display:grid; gap:12px; grid-template-columns: 1fr 1fr 1fr }
-    @media(max-width:560px){ .action-btns{ grid-template-columns: 1fr } }
+    .controls.main-buttons { 
+      align-items: stretch;
+    }
 
-    .btn:focus-visible, .filebtn:focus-visible, .chip:focus-within{ outline: none; box-shadow: 0 0 0 3px var(--ring); }
+    .filebtn{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      line-height: 1;
+    }
 
-    .toast{ pointer-events:none; position:fixed; left:50%; bottom:24px; transform:translateX(-50%); max-width:92vw;
-      background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color:#f1f5f9; border:1px solid rgba(255,255,255,.1);
-      border-radius:16px; padding:16px 20px; box-shadow: 0 20px 40px rgba(0,0,0,.4), 0 8px 16px rgba(0,0,0,.2);
-      opacity:0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(12px); font-weight: 600; }
-    .toast.show{ opacity:1; transform: translateX(-50%) translateY(-8px); }
-
-    .footer { text-align: center; padding: 20px; margin-top: 20px; color: var(--muted); font-size: 13px; font-weight: 500; border-top: 1px solid rgba(255,255,255,.05); }
-    .footer p { margin: 0; opacity: 0.8; }
+    .filebtn input{
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      height: 100%;
+      width: 100%;
+    }
   </style>
 </head>
 <body>
   <div class="shell">
-
     <header class="header" role="banner">
       <div class="brand">
         <img src="Logo.png" alt="GMS KL Logo" class="logo" />
-        <span>AOG Conference Asia 2025, Check In</span>
+        <span>AOG Conference Asia 2025 Check In</span>
       </div>
     </header>
 
@@ -161,30 +137,39 @@
       <!-- Left, scanner -->
       <section class="card" aria-labelledby="scanTitle">
         <h3 id="scanTitle">Scan or upload</h3>
-
         <div id="reader" aria-label="QR scanner area"></div>
-
         <div class="controls main-buttons" style="margin-top:12px">
-          <button id="start"   class="btn primary">Start camera</button>
+          <button id="start" class="btn primary">Start camera</button>
           <label class="filebtn">Attach file
             <input id="file" type="file" accept="image/jpeg,image/png" aria-label="Attach QR image">
           </label>
         </div>
-
         <div class="controls" style="margin-top:8px">
-          <button id="stop"    class="btn ghost"   style="display:none">Stop camera</button>
-          <button id="restart" class="btn ghost"   style="display:none">Refit view</button>
+          <button id="stop" class="btn ghost" style="display:none">Stop camera</button>
+          <button id="restart" class="btn ghost" style="display:none">Refit view</button>
           <div></div>
         </div>
-
-        <div class="hint">Allow the camera when asked, or attach a QR image file</div>
+        <div class="hint" style="color:#94a3b8; font-size:13px; text-align:center; margin-top:12px">
+          Allow the camera when asked, or attach a QR image file
+        </div>
       </section>
 
-      <!-- Right, review and action -->
+      <!-- Right, review + actions (new layout) -->
       <section class="card" aria-labelledby="reviewTitle">
         <h3 id="reviewTitle">Review and check in</h3>
 
-        <div id="pill" class="pill">Waiting for scan</div>
+        <!-- compact top row like screenshot -->
+        <div class="toolbar">
+          <div id="pill" class="pill">Waiting for scan</div>
+          <label class="pill">
+            <input id="toggleRaw" type="checkbox" style="margin-right:8px"> Show raw text
+          </label>
+        </div>
+
+        <div class="chips" role="radiogroup" aria-label="Choose status column">
+          <label class="chip"><input type="radio" name="target" value="toolkit" checked> Toolkit Status</label>
+          <label class="chip"><input type="radio" name="target" value="event"> Event Status</label>
+        </div>
 
         <div id="kv" class="kv" style="display:none">
           <div class="kv-row"><div class="kv-key">Name</div><div id="kvName" class="kv-val"></div></div>
@@ -192,7 +177,6 @@
           <div class="kv-row"><div class="kv-key">Number</div><div id="kvPhone" class="kv-val"></div></div>
           <div class="kv-row"><div class="kv-key">Email</div><div id="kvEmail" class="kv-val"></div></div>
           <div class="kv-row"><div class="kv-key">CG</div><div id="kvCg" class="kv-val"></div></div>
-
           <details class="kv-more">
             <summary>More details</summary>
             <div class="kv" style="margin-top:8px">
@@ -201,32 +185,23 @@
               <div class="kv-row"><div class="kv-key">CG Name</div><div id="kvCgN" class="kv-val"></div></div>
               <div class="kv-row"><div class="kv-key">Allergies</div><div id="kvAll" class="kv-val"></div></div>
               <div class="kv-row"><div class="kv-key">Receipt</div><div id="kvRec" class="kv-val"></div></div>
-              <!-- Payment must stay last -->
               <div class="kv-row"><div class="kv-key">Payment</div><div id="kvPay" class="kv-val"></div></div>
             </div>
           </details>
         </div>
 
-        <div class="raw-toggle">
-          <label class="chip" style="background:#16203a">
-            <input id="toggleRaw" type="checkbox"> Show raw text
-          </label>
-          <div id="raw" class="raw"></div>
+        <div id="raw" class="raw"></div>
+
+        <!-- buttons like screenshot -->
+        <div class="action-row">
+          <button id="markPay" class="btn warn">Check Mistaken Payment</button>
+          <button id="confirm" class="btn primary" disabled>Confirm check in</button>
+        </div>
+        <div class="clear-row">
+          <button id="clear" class="btn ghost" style="width:100%">Clear</button>
         </div>
 
-        <div class="chips" role="radiogroup" aria-label="Choose status column">
-          <label class="chip"><input type="radio" name="target" value="toolkit" checked> Toolkit Status</label>
-          <label class="chip"><input type="radio" name="target" value="event"> Event Status</label>
-        </div>
-
-        <div class="actionbar">
-          <div class="action-btns">
-            <button id="markPay" class="btn warn">Check Mistaken Payment</button>
-            <button id="confirm" class="btn primary" disabled>Confirm check in</button>
-            <button id="clear"   class="btn ghost">Clear</button>
-          </div>
-          <div id="status" class="status"></div>
-        </div>
+        <div id="status" class="status"></div>
       </section>
     </main>
   </div>
@@ -236,7 +211,7 @@
   <footer class="footer">
     <p>Copyright © <span id="year"></span> by GMS KL, made by William Jonathan</p>
   </footer>
-  
+
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
@@ -274,7 +249,6 @@
       const statusEl  = document.getElementById('status');
       const toastEl   = document.getElementById('toast');
 
-      // Scanner
       let scanner = null, running = false, lastScan = '';
       let currentCameraId = null, resizeTimer = null;
 
@@ -283,14 +257,8 @@
         const w = el.clientWidth || window.innerWidth;
         return Math.max(240, Math.min(640, Math.floor(w * 0.92)));
       }
+      function showToast(text){ toastEl.textContent = text || ''; toastEl.classList.add('show'); setTimeout(()=> toastEl.classList.remove('show'), 1600); }
 
-      function showToast(text){
-        toastEl.textContent = text || '';
-        toastEl.classList.add('show');
-        setTimeout(() => toastEl.classList.remove('show'), 1600);
-      }
-
-      // 9 fields, keep "receipt" variable name, your sheet label can say "Please attach proof of payment"
       function parsePayload(s){
         let p = String(s || '').trim();
         try { const u = new URL(p); const d = u.searchParams.get('data'); if (d) p = decodeURIComponent(d); } catch(_){}
@@ -329,7 +297,7 @@
         kvCgN.textContent   = f.cgName || '–';
         kvAll.textContent   = f.allergy || '–';
         kvRec.textContent   = f.receipt || '–';
-        if (kvPay) kvPay.textContent = '(not checked yet)'; /* Payment stays last */
+        if (kvPay) kvPay.textContent = '(not checked yet)';
         kvWrap.style.display = '';
         rawBox.textContent = f.payload;
         confirmBtn.disabled = false;
@@ -341,11 +309,7 @@
         rawBox.style.display = rawToggle.checked ? 'block' : 'none';
       });
 
-      function onScanSuccess(text){
-        lastScan = text;
-        setReview(text);
-        showToast('QR captured');
-      }
+      function onScanSuccess(text){ lastScan = text; setReview(text); showToast('QR captured'); }
       function onScanFailure(_){}
 
       async function chooseCameraId(){
@@ -362,68 +326,35 @@
           const size = readerSize();
           if (!scanner) scanner = new Html5Qrcode('reader');
           currentCameraId = await chooseCameraId();
-          const config = {
-            fps: 12, qrbox: { width:size, height:size }, aspectRatio: 1.0,
+          const config = { fps:12, qrbox:{ width:size, height:size }, aspectRatio:1, disableFlip:true,
             rememberLastUsedCamera:false, showTorchButtonIfSupported:true,
-            defaultZoomValueIfSupported:2, disableFlip:true,
             formatsToSupport:[ Html5QrcodeSupportedFormats.QR_CODE ],
-            experimentalFeatures:{ useBarCodeDetectorIfSupported:true }
-          };
+            experimentalFeatures:{ useBarCodeDetectorIfSupported:true } };
           if (currentCameraId) await scanner.start(currentCameraId, config, onScanSuccess, onScanFailure);
           else await scanner.start({ facingMode:'environment' }, config, onScanSuccess, onScanFailure);
           running = true;
-          startBtn.style.display = 'none';
-          stopBtn.style.display  = 'block';
-          refitBtn.style.display = 'block';
-          pill.textContent = 'Camera active';
-          statusEl.textContent = '';
-          statusEl.className = 'status';
-        }catch(e){
-          statusEl.textContent = 'Camera error, ' + e.message;
-          statusEl.className = 'status err';
-        }
+          startBtn.style.display = 'none'; stopBtn.style.display = 'block'; refitBtn.style.display = 'block';
+          pill.textContent = 'Camera active'; statusEl.textContent = ''; statusEl.className = 'status';
+        }catch(e){ statusEl.textContent = 'Camera error, ' + e.message; statusEl.className = 'status err'; }
       }
-
       async function stopCamera(){
-        if (scanner && running){
-          try { await scanner.stop(); } catch {}
-          running = false;
-          startBtn.style.display = 'block';
-          stopBtn.style.display  = 'none';
-          refitBtn.style.display = 'none';
-          pill.textContent = 'Camera stopped';
-        }
+        if (scanner && running){ try { await scanner.stop(); } catch {}
+          running = false; startBtn.style.display='block'; stopBtn.style.display='none'; refitBtn.style.display='none'; pill.textContent='Camera stopped'; }
       }
-
-      async function refitCamera(){
-        if (!running) return;
-        await stopCamera();
-        await startCamera();
-      }
-
+      async function refitCamera(){ if (!running) return; await stopCamera(); await startCamera(); }
       startBtn.addEventListener('click', startCamera);
       stopBtn.addEventListener('click', stopCamera);
       refitBtn.addEventListener('click', refitCamera);
-
-      const scheduleRefit = () => {
-        if (!running) return;
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(refitCamera, 250);
-      };
+      const scheduleRefit = () => { if (!running) return; clearTimeout(resizeTimer); resizeTimer = setTimeout(refitCamera, 250); };
       window.addEventListener('resize', scheduleRefit);
       window.addEventListener('orientationchange', scheduleRefit);
       document.addEventListener('visibilitychange', () => { if (document.hidden) stopCamera(); });
 
-      // File scanning
       fileInp.addEventListener('change', async (e) => {
-        const file = e.target.files && e.target.files[0];
-        if (!file) return;
+        const file = e.target.files && e.target.files[0]; if (!file) return;
         try{
           if (!/image\/jpeg|image\/jpg|image\/png/i.test(file.type)){
-            statusEl.textContent = 'Unsupported image, pick JPG or PNG';
-            statusEl.className = 'status err';
-            fileInp.value = '';
-            return;
+            statusEl.textContent = 'Unsupported image, pick JPG or PNG'; statusEl.className = 'status err'; fileInp.value = ''; return;
           }
           if (scanner && running) await stopCamera();
           if (!scanner) scanner = new Html5Qrcode('reader');
@@ -432,12 +363,9 @@
         }catch(err){
           statusEl.textContent = 'File scan failed, ' + (err && err.message ? err.message : 'unknown error');
           statusEl.className = 'status err';
-        }finally{
-          fileInp.value = '';
-        }
+        }finally{ fileInp.value = ''; }
       });
 
-      // API helpers
       async function postJSON(payload){
         const r = await fetch(API_ENDPOINT, {
           method: 'POST',
@@ -447,7 +375,6 @@
         return r.json();
       }
 
-      // Confirm check in
       confirmBtn.addEventListener('click', async () => {
         if (!lastScan) return;
         const target = document.querySelector('input[name="target"]:checked').value;
@@ -460,9 +387,7 @@
           statusEl.textContent = j.message || 'Done';
           statusEl.className = j.ok ? 'status ok' : 'status err';
           if (j.ok && /Checked in row/.test(j.message)){
-            lastScan = '';
-            setReview('');
-            showToast('Checked in');
+            lastScan = ''; setReview(''); showToast('Checked in');
           } else {
             confirmBtn.disabled = false;
           }
@@ -473,7 +398,6 @@
         }
       });
 
-      // Mark Payment Mistaken
       markPayBtn.addEventListener('click', async () => {
         if (!lastScan){ showToast('Scan a QR first'); return; }
         statusEl.textContent = 'Marking Payment Mistaken';
@@ -483,8 +407,7 @@
           if (typeof j.payment !== 'undefined' && kvPay) kvPay.textContent = j.payment || 'Payment Mistaken';
           if (j.ok){
             statusEl.textContent = j.message || 'Payment set to Payment Mistaken';
-            statusEl.className = 'status ok';
-            showToast('Payment set to Payment Mistaken');
+            statusEl.className = 'status ok'; showToast('Payment set to Payment Mistaken');
           }else{
             statusEl.textContent = j.message || 'Failed to mark Payment';
             statusEl.className = 'status err';
@@ -495,10 +418,8 @@
         }
       });
 
-      // Clear
       clearBtn.addEventListener('click', () => { lastScan = ''; setReview(''); showToast('Cleared'); });
 
-      // Init
       setReview('');
     });
   </script>
